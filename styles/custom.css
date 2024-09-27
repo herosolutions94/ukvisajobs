@@ -1,0 +1,177 @@
+/*_____ upperlay _____*/
+
+.upperlay {
+  position: fixed;
+  top: 0;
+  /* left: 280px; */
+  right: 0;
+  bottom: 0;
+  background: rgb(10 33 48 / 0.9);
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(5px);
+  transition: all ease 0.5s;
+  z-index: 100;
+}
+
+.upperlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#pageloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #f5f6f8;
+  z-index: 999999;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #db4f5a;
+  border-right: 4px solid #f0f5f9;
+  border-radius: 75%;
+  animation: spin 0.5s linear infinite;
+}
+
+/*_____ submitBtn spinner _____*/
+
+.spinnerHidden {
+  display: none !important;
+}
+
+.validation-error {
+  color: red;
+  font-size: 15px;
+}
+
+/* .submitBtn .spinner {
+  width: auto;
+  height: auto;
+  background: inherit;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.submitBtn .spinner ~ i {
+  visibility: hidden;
+}
+
+.submitBtn .spinner,
+.submitBtn .spinner:before,
+.submitBtn .spinner:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.submitBtn .spinner:before,
+.submitBtn .spinner:after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 3px solid;
+  animation: spinner 0.5s linear infinite;
+  border-radius: 75%;
+}
+
+.submitBtn .spinner:before {
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.submitBtn .spinner:after {
+  border-top-color: transparent;
+  border-left-color: transparent;
+  opacity: 0.5;
+}
+
+.submitBtn.smBtn .spinner:before,
+.submitBtn.smBtn .spinner:after {
+  width: 14px;
+  height: 14px;
+}
+
+.submitBtn.lgBtn .spinner:before,
+.submitBtn.lgBtn .spinner:after {
+  width: 20px;
+  height: 20px;
+} */
+
+h1.heading > div > span,
+h2.heading > div > span,
+h3.heading > div > span,
+h4.heading > div > span,
+h5.heading > div > span,
+h6.heading > div > span {
+  background: linear-gradient(36deg, #6131d8, #a761ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#events .tag_list > li span.active {
+  display: inline-block;
+  color: #b0b0b0;
+  padding: 0.6rem 1.5rem;
+  border: 0.2rem solid #eee;
+  border-radius: 0.7rem;
+  border: solid;
+  color: #6131d8;
+  cursor: pointer;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* .StripeElement.StripeElement--complete {
+  display: block;
+  margin: 10px 0 20px 0;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-family: "Source Code Pro", monospace;
+  box-shadow: rgb(50 50 93 / 15%) 0px 1px 3px, rgb(0 0 0 / 2%) 0px 1px 0px;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: white;
+} */
+
+/* button[disabled] {
+  opacity: 0.8;
+  background: #bbb;
+  color: #fff;
+  cursor: not-allowed !important;
+  border: grey;
+} */
+
+#banner .colL .flex_count .col_num:nth-child(3) {
+  padding-left: 0 !important;
+}
