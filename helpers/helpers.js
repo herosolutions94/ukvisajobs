@@ -118,6 +118,8 @@ export function haversineDistance(coords1, coords2) {
   return false;
   
 };
+
+
 export function isMobileDevice() {
   return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
