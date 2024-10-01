@@ -1,4 +1,5 @@
 
+import MetaGenerator from "@/components/meta-generator";
 import Text from "@/components/text";
 import { cmsFileUrl, doObjToFormData } from "@/helpers/helpers"
 import http from "@/helpers/http";
@@ -15,35 +16,33 @@ export const getServerSideProps = async (context) => {
   return { props: { result } }; // Pass jobsResult to props
 };
 
-export default function Terms ({result }) {
+export default function Terms({ result }) {
   console.log(result);
-  const  { content } = result;
-
-
-
+  const { content, meta_desc, page_title, site_settings } = result;
   return (
- <>
-<main id="root">
+    <>
+      <MetaGenerator meta_info={meta_desc} page_title={page_title} site_settings={site_settings} />
+      <main id="root">
 
-<section id="job_intro" className="all_banner">
-        <div className="contain">
-          <div className="content">
-            <h1 className="heading">
-              <Text string={content.banner_heading} parse={true} />
-            </h1>
+        <section id="job_intro" className="all_banner">
+          <div className="contain">
+            <div className="content">
+              <h1 className="heading">
+                <Text string={content.banner_heading} parse={true} />
+              </h1>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="terms">
-        <div className="contain sm">
-          <div className="ck_editor">
-            <Text string={content.detail} parse={true} />
+        <section id="terms">
+          <div className="contain sm">
+            <div className="ck_editor">
+              <Text string={content.detail} parse={true} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </main>
- 
- </>
+
+    </>
   );
 }

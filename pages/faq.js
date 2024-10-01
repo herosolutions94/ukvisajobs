@@ -5,6 +5,7 @@ import { cmsFileUrl, doObjToFormData } from "@/helpers/helpers";
 import http from "@/helpers/http";
 import Image from "next/image";
 import Link from "next/link";
+import MetaGenerator from "@/components/meta-generator";
 
 export const getServerSideProps = async (context) => {
   const result = await http
@@ -16,15 +17,12 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Faq({ result }) {
-  console.log(result);
-  const { content, faqs, faq2s } = result;
+  const { content, faqs, faq2s, meta_desc, page_title, site_settings } = result;
 
-  //
   const [section, setSection] = useState(1);
   const [list, setList] = useState(faqs);
   const [selected, setSelected] = useState(list?.[0]?.id);
 
-  //
   const handleSetSection = (s) => {
     setSection(s);
     if (s === 1) setList(faqs);
@@ -38,6 +36,7 @@ export default function Faq({ result }) {
 
   return (
     <>
+      <MetaGenerator meta_info={meta_desc} page_title={page_title} site_settings={site_settings} />
       <main id="root">
         <section id="job_intro" className="all_banner">
           <div className="contain">

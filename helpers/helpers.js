@@ -3,6 +3,7 @@ import parse from "html-react-parser";
 import FormData from "form-data";
 // import moment from "moment";
 import http from "./http";
+import { authToken } from "@/helpers/authToken";
 import toast from "react-hot-toast";
 import axios from "axios";
 import moment from 'moment-timezone';
@@ -35,7 +36,7 @@ export const getUserTimezone = () => {
 export const formatTimeFromSeconds = (seconds, userTimezone) => {
   // Convert seconds to milliseconds and create a moment instance
   const date = moment.unix(seconds);
-  
+
   // Convert to the user's timezone and format
   return date.tz(userTimezone).format('MMMM D, YYYY [at] h:mm A');
 };
@@ -49,10 +50,10 @@ export function generateUniqueNumber() {
 export const convertTimeInSecondsToDateTime = (timeInSeconds) => {
   // // Get user's timezone
   // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  
+
   // // Convert time in seconds to milliseconds and create a Date object
   // const date = new Date(timeInSeconds * 1000);
-  
+
   // // Format the date and time in the user's timezone
   // const formatter = new Intl.DateTimeFormat('en-US', {
   //   timeZone,
@@ -64,10 +65,10 @@ export const convertTimeInSecondsToDateTime = (timeInSeconds) => {
   //   second: 'numeric',
   //   hour12: true
   // });
-  
+
   // return formatter.format(date);
   const userTimezone = getUserTimezone();
- return formatTimeFromSeconds(timeInSeconds, userTimezone);
+  return formatTimeFromSeconds(timeInSeconds, userTimezone);
 };
 export const convertToAESTDashes = (date) => {
 
@@ -102,21 +103,21 @@ export function haversineDistance(coords1, coords2) {
   const lon1 = coords1?.longitude;
   const lat2 = coords2?.latitude;
   const lon2 = coords2?.longitude;
-  if(lat1 && lat2 && lon1 && lon2){
-      const R = 6371; // Radius of the Earth in km
+  if (lat1 && lat2 && lon1 && lon2) {
+    const R = 6371; // Radius of the Earth in km
 
-      const dLat = toRad(lat2 - lat1);
-      const dLon = toRad(lon2 - lon1);
-      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-      const distance = R * c; // Distance in km
-      return distance;
+    const distance = R * c; // Distance in km
+    return distance;
   }
   return false;
-  
+
 };
 
 
@@ -268,10 +269,7 @@ export function doObjToFormDataWithoutString(obj) {
   return formData;
 }
 
-export function doFirstUpperRestLower(word) {
-  const lower = word.toLowerCase();
-  return word.charAt(0).toUpperCase() + lower.slice(1);
-}
+
 export function new_moment_date() {
   moment.tz.setDefault("Australia/Sydney");
   return moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
@@ -357,21 +355,32 @@ export function split_string(str, symbol) {
   return ar;
 }
 
-export function cmsFileUrl(src, folder = "images",stock=false) {
+export function cmsFileUrl(src, folder = "images", stock = false) {
   if (src === null || src === undefined || src === '') {
-    if(stock===true){
+    if (stock === true) {
       return '/images/stock-profile.jpg';
     }
-    else{
+    else {
       return '/images/no-image.svg';
     }
-    
+
   }
   else {
     return `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}uploads/${folder}/${src}`;
   }
 }
-
+export function doFirstUpperRestLower(word) {
+  const lower = word.toLowerCase();
+  return word.charAt(0).toUpperCase() + lower.slice(1);
+}
+export function makeSalaryString(min, max, interval) {
+  min = Number(min);
+  max = Number(max);
+  if (min === 0 && max === 0) return "Competitive";
+  else if (min > 0 && max === 0) return `${min} / ${interval}`;
+  else if (min > 0 && max > 0) return `${min} - ${max} / ${interval}`;
+  else return "Not Specified";
+}
 export function timeAgo(date) {
   const momentDate = moment(date);
   const diff = moment().diff(momentDate);
@@ -426,16 +435,22 @@ export function hasDecimal(value) {
   return value % 1 !== 0;
 }
 export function format_amount(amount, size = 2) {
-  amount = Math.round(parseFloat(amount) * 10) / 10; 
+  amount = Math.round(parseFloat(amount) * 10) / 10;
   return amount >= 0 ? !(hasDecimal(amount)) ?
-  `$${(amount)}`
-  :
-     `$${numberFormatAmount(amount, size)}`
+    `$${(amount)}`
+    :
+    `$${numberFormatAmount(amount, size)}`
     : `$${numberFormatAmount(Math.abs(amount), size)}`
     ;
 }
-
-function numberFormat(amount, size) {
+export const ifNotLoggedIn = () => {
+  if (authToken()) return true;
+  else;
+  {
+    router.push('/signin?from=/')
+  }
+};
+export function numberFormat(amount, size) {
   // You can customize the number formatting logic here if needed
   return new Intl.NumberFormat(undefined, {
     minimumFractionDigits: size,

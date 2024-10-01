@@ -4,6 +4,7 @@ import { cmsFileUrl, doObjToFormData } from "@/helpers/helpers"
 // import { nowPlus6Days, eventDateFormat } from "../helpers/helpers";
 import Image from "next/image";
 import Link from "next/link";
+import MetaGenerator from "@/components/meta-generator";
 
 export const getServerSideProps = async (context) => {
   const result = await http
@@ -15,45 +16,45 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Blogs({ result }) {
-  const { content, cats, meta_desc, site_settings, blogs } = result;
-  console.log(result);
+  const { content, cats, meta_desc, site_settings, blogs, page_title } = result;
   return (
     <>
-     <main id="root">
-     <section id="job_intro" className="all_banner">
-            <div className="contain">
-              <div className="content">
-                <h1 className="heading">
-                  <Text string={content.banner_heading} parse={true} />
-                </h1>
-              </div>
+      <MetaGenerator meta_info={meta_desc} page_title={page_title} site_settings={site_settings} />
+      <main id="root">
+        <section id="job_intro" className="all_banner">
+          <div className="contain">
+            <div className="content">
+              <h1 className="heading">
+                <Text string={content.banner_heading} parse={true} />
+              </h1>
             </div>
-          </section>
-          <section id="job_profile_list" className="bottom_padding_lg">
-            <div className="contain">
-              <ul className="tag_list blog_tag">
-                {cats &&
-                  cats.map((cat) => (
-                    <li>
-                      <span
-                        // onClick={() => {
-                        //   searchBlogs(cat.id);
-                        // }}
-                      >
-                        {cat.title}
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-              <div className="flex_row main_row row">
-                {
-                  blogs?.map((blog,index)=>{
-                    return(
-                      <div className="col col-lg-4 col-md-6">
+          </div>
+        </section>
+        <section id="job_profile_list" className="bottom_padding_lg">
+          <div className="contain">
+            <ul className="tag_list blog_tag">
+              {cats &&
+                cats.map((cat) => (
+                  <li>
+                    <span
+                    // onClick={() => {
+                    //   searchBlogs(cat.id);
+                    // }}
+                    >
+                      {cat.title}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+            <div className="flex_row main_row row">
+              {
+                blogs?.map((blog, index) => {
+                  return (
+                    <div className="col col-lg-4 col-md-6">
                       <div className="job_profile_blk">
                         <div className="fig">
                           <Link href={(`/blogs/${blog.id}`)}>
-                            <Image src={cmsFileUrl(blog.image,'blogs')} width={368} height={188} />
+                            <Image src={cmsFileUrl(blog.image, 'blogs')} width={368} height={188} />
                           </Link>
                         </div>
                         <div className="txt">
@@ -75,23 +76,23 @@ export default function Blogs({ result }) {
                         </div>
                       </div>
                     </div>
-                    )
-                  })
-                }
-              </div>
-
-              <div
-                className="btn_blk text-center gap_top"
-                style={{ display: "none" }}
-              >
-                <Link href="#" className="site_btn blank">
-                  Load More
-                </Link>
-              </div>
+                  )
+                })
+              }
             </div>
-          </section>
 
-          </main>
+            <div
+              className="btn_blk text-center gap_top"
+              style={{ display: "none" }}
+            >
+              <Link href="#" className="site_btn blank">
+                Load More
+              </Link>
+            </div>
+          </div>
+        </section>
+
+      </main>
     </>
   );
 }
