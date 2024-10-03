@@ -48,12 +48,12 @@ export default function Header({ siteSettings }) {
                 token ?
                   <ul>
                     <li>
-                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_DASHBOARD_URL}>
+                      <Link className="" href={process.env.NEXT_PUBLIC_DASHBOARD_URL}>
                         Dashboard
                       </Link>
                     </li>
                     <li>
-                      <Link href="#!" className="site_btn" onClick={logout}>
+                      <Link href="#!" className="" onClick={logout}>
                         Logout
                       </Link>
                     </li>
@@ -61,12 +61,12 @@ export default function Header({ siteSettings }) {
                   :
                   <ul>
                     <li>
-                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_LOGIN_URL}>
+                      <Link className="" href={process.env.NEXT_PUBLIC_LOGIN_URL}>
                         Sign in
                       </Link>
                     </li>
                     <li>
-                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_SIGUP_URL}>
+                      <Link className="" href={process.env.NEXT_PUBLIC_SIGUP_URL}>
                         Sign up
                       </Link>
                     </li>

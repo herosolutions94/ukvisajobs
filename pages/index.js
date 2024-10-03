@@ -20,7 +20,6 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Home({ result, jobsResult }) {
-  console.log(result);
   const {
     content,
     partners,
@@ -35,7 +34,6 @@ export default function Home({ result, jobsResult }) {
     experienced_jobs,
     site_settings
   } = result;
-  console.log(meta_desc)
 
   return (
     <>

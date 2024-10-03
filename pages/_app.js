@@ -11,17 +11,16 @@ import NextNProgress from "nextjs-progressbar";
 import Layout from '@/components/layout';
 
 export default function App({ Component, pageProps, siteSettings }) {
-  console.log(siteSettings)
   const renderWithLayout =
     Component.getLayout ||
     function (page) {
       return (
         <>
-            <Toaster position="bottom-right" toastOptions={{
-              className: 'toast-wrap',
-            }} />
-            <NextNProgress color="#e62254" />
-              <Layout siteSettings={siteSettings}>{page}</Layout>
+          <Toaster position="bottom-right" toastOptions={{
+            className: 'toast-wrap',
+          }} />
+          <NextNProgress color="#e62254" />
+          <Layout siteSettings={siteSettings}>{page}</Layout>
 
         </>
       )

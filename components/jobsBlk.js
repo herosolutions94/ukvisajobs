@@ -11,8 +11,6 @@ import JobApplyPopup from "./job-apply-popup";
 import Joblisting from "./jobListing";
 
 export default function JobsBlk({ content, student_jobs, experienced_jobs }) {
-
-
     return <>
         <section id="job_lstng">
             <div className="contain">
@@ -28,7 +26,7 @@ export default function JobsBlk({ content, student_jobs, experienced_jobs }) {
                     <Joblisting jobs={student_jobs} />
                 </div>
                 <div className="btn_blk text-center">
-                    <Link href={("/open-jobs/1")} className="site_btn blank">
+                    <Link href={(process.env.NEXT_PUBLIC_LIVE_URL + "/open-jobs/1")} className="site_btn blank">
                         <Text string={content.sec3_button_text} />
                     </Link>
                 </div>

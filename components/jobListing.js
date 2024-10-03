@@ -103,7 +103,7 @@ function Joblisting({
       setPopupJob(job);
       window.open(job.job_link, "_blank");
     } else {
-      router.push(`/job-profile/${job.id}`);
+      router.push(`${process.env.NEXT_PUBLIC_LIVE_URL}/job-profile/${job.id}`);
     }
   };
   const dismissPopup = () => {
