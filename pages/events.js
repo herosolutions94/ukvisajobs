@@ -7,6 +7,7 @@ import http from "@/helpers/http";
 import Image from "next/image";
 import Link from "next/link";
 import MetaGenerator from "@/components/meta-generator";
+import { useEffect, useState } from "react";
 
 
 export const getServerSideProps = async (context) => {
@@ -20,6 +21,35 @@ export const getServerSideProps = async (context) => {
 
 export default function Events({ result }) {
   const { cats, meta_desc, site_settings, events, page_title } = result;
+  const [dateRange, setDateRange] = useState("");
+  const [eventsArr, setEventsArr] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setEventsArr(events)
+  }, [events]);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const post = {
+      dateRange: e.target.value
+    };
+    setDateRange(e.target.value);
+    setLoading(true)
+    http
+      .post("fetch-events-data", doObjToFormData(post))
+      .then(({ data }) => {
+        setLoading(false)
+        if (data?.status) {
+          setEventsArr(data?.events)
+        }
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+      });
+  };
   return (
     <>
       <MetaGenerator meta_info={meta_desc} page_title={page_title} site_settings={site_settings} />
@@ -30,8 +60,8 @@ export default function Events({ result }) {
               <select
                 name="dateRange"
                 id="dateRange"
-                // value={dateRange}
-                // onChange={(e) => handleSubmit(e)}
+                value={dateRange}
+                onChange={(e) => handleSubmit(e)}
                 className="input w-auto p-0 border-0"
               >
                 <option value="">Upcoming Events</option>
@@ -42,13 +72,17 @@ export default function Events({ result }) {
                 ))}
               </select>
             </div>
-            {events.length === 0 ? (
-              <h3>No event found.</h3>
-            ) : (
-              events.map((event) => {
-                return <EventBlk event={event} key={event.id} />;
-              })
-            )}
+            {
+              loading ?
+                <p>fetching...</p>
+                :
+                eventsArr?.length === 0 ? (
+                  <h3>No event found.</h3>
+                ) : (
+                  eventsArr?.map((event) => {
+                    return <EventBlk event={event} key={event.id} />;
+                  })
+                )}
             <div
               className="btn_blk justify-content-between mt-5"
               style={{ display: "none" }}

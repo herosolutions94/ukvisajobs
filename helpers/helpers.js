@@ -447,7 +447,7 @@ export const ifNotLoggedIn = () => {
   if (authToken()) return true;
   else;
   {
-    router.push('/signin?from=/')
+    router.push(process.env.NEXT_PUBLIC_LOGIN_URL)
   }
 };
 export function numberFormat(amount, size) {

@@ -41,7 +41,7 @@ function Joblisting({
               toast.error("Error 400:" + error.response.data.message || "Bad Request")
               setTimeout(() => {
                 if (error?.response?.data?.errorType == 'invalid_token') {
-                  router.push('/signin?from=/')
+                  router.push(process.env.NEXT_PUBLIC_LOGIN_URL)
                 }
               }, 200);
             } else {
@@ -81,7 +81,7 @@ function Joblisting({
               toast.error("Error 400:" + error.response.data.message || "Bad Request")
               setTimeout(() => {
                 if (error?.response?.data?.errorType == 'invalid_token') {
-                  router.push('/signin?from=/')
+                  router.push(process.env.NEXT_PUBLIC_LOGIN_URL)
                 }
               }, 200);
             } else {

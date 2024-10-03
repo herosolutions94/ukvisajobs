@@ -1,7 +1,20 @@
+import { authToken } from "@/helpers/authToken";
 import { cmsFileUrl } from "@/helpers/helpers";
+import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 export default function Header({ siteSettings }) {
+  const router = useRouter();
+  const path = router.pathname;
+  const [active, setActive] = useState(false);
+  const token = authToken()
+  const logout = (e) => {
+    e.preventDefault();
+    deleteCookie('authToken');
+    router.push("/");
+  }
   return (
     <>
       <header className="">
@@ -16,7 +29,7 @@ export default function Header({ siteSettings }) {
               />
             </Link>
           </div>
-          <div className="togle_option">
+          <div className="togle_option" onClick={() => setActive(!active)}>
             <div className="tog_opt">
               <button type="button" className="toggle">
                 <span></span>
@@ -30,40 +43,56 @@ export default function Header({ siteSettings }) {
                 />
               </div>
             </div>
-            <div className="drop_sub">
-              <ul>
-                <li>
-                  <Link className="site_btn" href="/signin">
-                    Sign in
-                  </Link>
-                </li>
-                <li>
-                  <Link className="site_btn" href="/signup">
-                    Sign up
-                  </Link>
-                </li>
-              </ul>
+            <div className={active ? "drop_sub active" : "drop_sub"}>
+              {
+                token ?
+                  <ul>
+                    <li>
+                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_DASHBOARD_URL}>
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#!" className="site_btn" onClick={logout}>
+                        Logout
+                      </Link>
+                    </li>
+                  </ul>
+                  :
+                  <ul>
+                    <li>
+                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_LOGIN_URL}>
+                        Sign in
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="site_btn" href={process.env.NEXT_PUBLIC_SIGUP_URL}>
+                        Sign up
+                      </Link>
+                    </li>
+                  </ul>
+              }
             </div>
           </div>
           <nav className="ease">
             <div id="nav" className="">
               <ul id="lst">
                 <li>
-                  <Link aria-current="page" className="active" href="/">
+                  <Link aria-current="page" className={path === '/' ? "active" : ""} href="/">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="/open-jobs/1">Jobs</Link>
+                  <Link href={process.env.NEXT_PUBLIC_JOBS_URL}>Jobs</Link>
                 </li>
                 <li>
-                  <Link href="/events">Events</Link>
+                  <Link className={path === '/events' ? "active" : ""} href="/events">Events</Link>
                 </li>
                 <li>
-                  <Link href="/blogs">Resources</Link>
+                  <Link className={path === '/blogs' ? "active" : ""} href="/blogs">Resources</Link>
                 </li>
                 <li>
-                  <Link href="/faq">FAQs</Link>
+                  <Link className={path === '/faq' ? "active" : ""} href="/faq">FAQs</Link>
                 </li>
               </ul>
             </div>

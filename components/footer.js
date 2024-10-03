@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Header({ siteSettings }) {
-    const d = new Date();
+  const d = new Date();
   let year = d.getFullYear();
   return (
     <>
@@ -31,7 +31,7 @@ export default function Header({ siteSettings }) {
                     />
                     <span>
                       <div>
-                       {siteSettings?.site_address}
+                        {siteSettings?.site_address}
                       </div>
                     </span>
                   </li>
@@ -42,63 +42,63 @@ export default function Header({ siteSettings }) {
                       width={20} // Adjust width as needed
                       height={20} // Adjust height as needed
                     />
-                    <a href={"mailto:"+siteSettings?.site_email}>
+                    <a href={"mailto:" + siteSettings?.site_email}>
                       <div>{siteSettings?.site_email}</div>
                     </a>
                   </li>
                 </ul>
                 <div className="social_logon">
-                    {
-                        siteSettings?.site_facebook ?
-                  <a
-                    href={siteSettings?.site_facebook}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/images/new/facebook.svg"
-                      alt="Facebook"
-                      width={20} // Adjust width as needed
-                      height={20} // Adjust height as needed
-                    />
-                  </a>
-                  :
-                  ""
-                    }
-                    {
-                        siteSettings?.site_twitter ?
-                  <a
-                    href={siteSettings?.site_twitter}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/images/new/twitter.svg"
-                      alt="Twitter"
-                      width={20} // Adjust width as needed
-                      height={20} // Adjust height as needed
-                    />
-                  </a>
-                  :
-                  ""
-                    }
-                     {
-                        siteSettings?.site_linkedin ?
-                  <a
-                    href={siteSettings?.site_linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/images/new/linkedin.svg"
-                      alt="LinkedIn"
-                      width={20} // Adjust width as needed
-                      height={20} // Adjust height as needed
-                    />
-                  </a>
-                  :
-                  ""
-                     }
+                  {
+                    siteSettings?.site_facebook ?
+                      <a
+                        href={siteSettings?.site_facebook}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Image
+                          src="/images/new/facebook.svg"
+                          alt="Facebook"
+                          width={20} // Adjust width as needed
+                          height={20} // Adjust height as needed
+                        />
+                      </a>
+                      :
+                      ""
+                  }
+                  {
+                    siteSettings?.site_twitter ?
+                      <a
+                        href={siteSettings?.site_twitter}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Image
+                          src="/images/new/twitter.svg"
+                          alt="Twitter"
+                          width={20} // Adjust width as needed
+                          height={20} // Adjust height as needed
+                        />
+                      </a>
+                      :
+                      ""
+                  }
+                  {
+                    siteSettings?.site_linkedin ?
+                      <a
+                        href={siteSettings?.site_linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Image
+                          src="/images/new/linkedin.svg"
+                          alt="LinkedIn"
+                          width={20} // Adjust width as needed
+                          height={20} // Adjust height as needed
+                        />
+                      </a>
+                      :
+                      ""
+                  }
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function Header({ siteSettings }) {
                 <h4>Quick Links</h4>
                 <ul className="list">
                   <li>
-                    <Link href="/open-jobs/1">Jobs</Link>
+                    <Link href={process.env.NEXT_PUBLIC_JOBS_URL}>Jobs</Link>
                   </li>
                   <li>
                     <Link href="/events">Events</Link>

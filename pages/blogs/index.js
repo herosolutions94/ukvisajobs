@@ -5,6 +5,7 @@ import { cmsFileUrl, doObjToFormData } from "@/helpers/helpers"
 import Image from "next/image";
 import Link from "next/link";
 import MetaGenerator from "@/components/meta-generator";
+import { useEffect, useState } from "react";
 
 export const getServerSideProps = async (context) => {
   const result = await http
@@ -17,6 +18,29 @@ export const getServerSideProps = async (context) => {
 
 export default function Blogs({ result }) {
   const { content, cats, meta_desc, site_settings, blogs, page_title } = result;
+  const [blogArr, setBlogArr] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setBlogArr(blogs)
+  }, [blogs]);
+  const searchBlogs = (cat_id) => {
+    setCategory(cat_id)
+    let formData = { cat_id };
+    setLoading(true)
+    http
+      .post("fetch-blogs-data", doObjToFormData(formData))
+      .then(({ data }) => {
+        setLoading(false)
+        if (data?.status) {
+          setBlogArr(data?.blogs)
+        }
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+      });
+  };
   return (
     <>
       <MetaGenerator meta_info={meta_desc} page_title={page_title} site_settings={site_settings} />
@@ -37,9 +61,10 @@ export default function Blogs({ result }) {
                 cats.map((cat) => (
                   <li>
                     <span
-                    // onClick={() => {
-                    //   searchBlogs(cat.id);
-                    // }}
+                      className={category === cat?.id ? 'active' : ''}
+                      onClick={() => {
+                        searchBlogs(cat.id);
+                      }}
                     >
                       {cat.title}
                     </span>
@@ -48,36 +73,42 @@ export default function Blogs({ result }) {
             </ul>
             <div className="flex_row main_row row">
               {
-                blogs?.map((blog, index) => {
-                  return (
-                    <div className="col col-lg-4 col-md-6">
-                      <div className="job_profile_blk">
-                        <div className="fig">
-                          <Link href={(`/blogs/${blog.id}`)}>
-                            <Image src={cmsFileUrl(blog.image, 'blogs')} width={368} height={188} />
-                          </Link>
-                        </div>
-                        <div className="txt">
-                          <h4>
-                            <Link href={(`/blogs/${blog.id}`)}>
-                              <Text string={blog.title} length={50} />
-                            </Link>
-                          </h4>
-                          <Text string={blog.description} parse={true} length={150} />
-                          <div className="btn_blk">
-                            <Link
-                              className="site_btn text learn"
-                              href={(`/blogs/${blog.id}`)}
-                            >
-                              Read More
-                              <i className="arrow" />
-                            </Link>
+                loading
+                  ? <h3>fetching...</h3>
+                  :
+                  blogArr?.length === 0 ?
+                    <h3>No blog found.</h3>
+                    :
+                    blogArr?.map((blog, index) => {
+                      return (
+                        <div className="col col-lg-4 col-md-6" key={index}>
+                          <div className="job_profile_blk">
+                            <div className="fig">
+                              <Link href={(`/blogs/${blog.id}`)}>
+                                <Image src={cmsFileUrl(blog.image, 'blogs')} width={368} height={188} />
+                              </Link>
+                            </div>
+                            <div className="txt">
+                              <h4>
+                                <Link href={(`/blogs/${blog.id}`)}>
+                                  <Text string={blog.title} length={50} />
+                                </Link>
+                              </h4>
+                              <Text string={blog.description} parse={true} length={150} />
+                              <div className="btn_blk">
+                                <Link
+                                  className="site_btn text learn"
+                                  href={(`/blogs/${blog.id}`)}
+                                >
+                                  Read More
+                                  <i className="arrow" />
+                                </Link>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )
-                })
+                      )
+                    })
               }
             </div>
 
