@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { useSelector } from "react-redux";
 import JobApplyPopup from "./JobApplyPopup";
 import { useRouter } from "next/router";
 import SingleJobBlk from "./job-single";

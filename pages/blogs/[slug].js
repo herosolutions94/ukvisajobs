@@ -7,9 +7,9 @@ import MetaGenerator from "@/components/meta-generator";
 
 export const getServerSideProps = async (context) => {
   const { req, params } = context;
-  const id = params.id || [];
+  const slug = params.slug || [];
   const result = await http
-    .post("/blog-detail", doObjToFormData({ id: id }))
+    .post("/blog-detail", doObjToFormData({ slug: slug }))
     .then((response) => response.data)
     .catch((error) => error.response.data.message);
   return { props: { result } };

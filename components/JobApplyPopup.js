@@ -1,6 +1,4 @@
 import React from "react";
-// import { useSelector } from "react-redux";
-// import FormProcessingSpinner from "../common/FormProcessingSpinner";
 import FormProcessingSpinner from "./FormProcessingSpinner";
 import ReportPopup from "./ReportPopup";
 
@@ -18,7 +16,6 @@ function JobApplyPopup({
   showReportPopup,
   handleToggleReportPopup,
 }) {
-  const authToken = useSelector((state) => state.fetchSignin.authToken);
 
   return (
     <>

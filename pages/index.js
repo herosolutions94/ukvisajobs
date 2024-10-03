@@ -211,7 +211,7 @@ export default function Home({ result, jobsResult }) {
                   <div className="col">
                     <div className="job_profile_blk">
                       <div class="fig">
-                        <Link href={`/blog-detail/${row.id}`}>
+                        <Link href={`/blogs/${row.slug}`}>
                           <Image
                             src={cmsFileUrl(row.image, "blogs")}
                             width={375}
@@ -222,7 +222,7 @@ export default function Home({ result, jobsResult }) {
                       </div>
                       <div class="txt">
                         <h4>
-                          <Link href={`/blog-detail/${row.id}`}>
+                          <Link href={`/blogs/${row.slug}`}>
                             <div>
                               <Text string={row.title} />
                             </div>
@@ -233,7 +233,7 @@ export default function Home({ result, jobsResult }) {
                         </div>
                         <div class="btn_blk">
                           <Link
-                            href={`/blog-detail/${row.id}`}
+                            href={`/blogs/${row.slug}`}
                             class="site_btn text learn"
                           >
                             Read More<i class="arrow"></i>

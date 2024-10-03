@@ -84,13 +84,13 @@ export default function Blogs({ result }) {
                         <div className="col col-lg-4 col-md-6" key={index}>
                           <div className="job_profile_blk">
                             <div className="fig">
-                              <Link href={(`/blogs/${blog.id}`)}>
+                              <Link href={(`/blogs/${blog.slug}`)}>
                                 <Image src={cmsFileUrl(blog.image, 'blogs')} width={368} height={188} />
                               </Link>
                             </div>
                             <div className="txt">
                               <h4>
-                                <Link href={(`/blogs/${blog.id}`)}>
+                                <Link href={(`/blogs/${blog.slug}`)}>
                                   <Text string={blog.title} length={50} />
                                 </Link>
                               </h4>
@@ -98,7 +98,7 @@ export default function Blogs({ result }) {
                               <div className="btn_blk">
                                 <Link
                                   className="site_btn text learn"
-                                  href={(`/blogs/${blog.id}`)}
+                                  href={(`/blogs/${blog.slug}`)}
                                 >
                                   Read More
                                   <i className="arrow" />
